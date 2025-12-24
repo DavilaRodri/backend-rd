@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Rodrigo Dávila</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕹️</text></svg>">
+</head>
+<body class="dark-mode">
+    <div class="logo">RD</div>
+    <div class="theme-toggle">
+        <button id="theme-btn" onclick="toggleTheme()">☀️</button>
+    </div>
+    <div class="container">
+        <div class="content-area">
+            <div class="welcome">
+                <h1>¡Hola! Soy Rodrigo Dávila</h1>
+                <p><strong>Manager Associate de IA Generativa en Accenture</strong> | 8 años de experiencia en tecnología y consultoría</p>
+                <p>Especializado en LLMs, Agentic AI y migración de código legacy. Actualmente liderando investigación de migración COBOL a Java con IA para BBVA.</p>
+                <p>Pregúntame sobre mi experiencia profesional, proyectos, habilidades técnicas o lo que quieras saber sobre mí.</p>
+                <p>📧 <a href="mailto:rdavila92@gmail.com">rdavila92@gmail.com</a> · 💼 <a href="https://www.linkedin.com/in/rodrigo-d%C3%A1vila-5b675383/" target="_blank">LinkedIn</a> · 💻 <a href="https://github.com/DavilaRodri" target="_blank">GitHub</a></p>
+            </div>
+            <div id="conversation" class="conversation"></div>
+        </div>
+        <div class="chat-area">
+            <div class="input-group">
+                <textarea id="pregunta" placeholder="Escribe tu pregunta aquí..." onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); enviarPregunta(); }"></textarea>
+            </div>
+            <span class="send-icon" onclick="enviarPregunta()" title="Enviar">↑</span>
+        </div>
+    </div>
+    <script src="js/ia_responder.js"></script>
+    <script src="js/script.js"></script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91cd43086c6eb033',t:'MTc0MTM4MzczNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+</html>
