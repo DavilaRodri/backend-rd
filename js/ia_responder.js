@@ -271,6 +271,7 @@ let conversationHistory = [];
 
 async function responderPregunta(pregunta) {
     console.log("Enviando pregunta a Gemini:", pregunta);
+    console.log("URL:", `${GEMINI_API_URL}?key=${GEMINI_API_KEY.substring(0,10)}...`);
     
     try {
         // Añadir pregunta al historial
@@ -293,6 +294,8 @@ async function responderPregunta(pregunta) {
             }
         };
         
+        console.log("Enviando request...");
+        
         const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: {
@@ -301,9 +304,22 @@ async function responderPregunta(pregunta) {
             body: JSON.stringify(requestBody)
         });
         
+        console.log("Response status:", response.status);
+        
         if (!response.ok) {
             const errorData = await response.json();
-            console.error("Error de Gemini:", errorData);
+            console.error("Error de Gemini:", JSON.stringify(errorData, null, 2));
+            
+            // Quitar la última pregunta del historial si hay error
+            conversationHistory.pop();
+            
+            // Mensaje más específico según el error
+            if (response.status === 403) {
+                return 'Error de permisos con la API. Por favor, contacta con Rodrigo.';
+            } else if (response.status === 429) {
+                return 'Demasiadas peticiones. Espera un momento e inténtalo de nuevo.';
+            }
+            
             throw new Error(errorData.error?.message || 'Error al conectar con Gemini');
         }
         
@@ -328,7 +344,9 @@ async function responderPregunta(pregunta) {
         return respuestaTexto;
         
     } catch (error) {
-        console.error('Error al obtener respuesta:', error);
+        console.error('Error completo:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
         return 'Lo siento, hubo un error al procesar tu pregunta. Intenta de nuevo.';
     }
 }
