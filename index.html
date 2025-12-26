@@ -2,36 +2,94 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Rodrigo Dávila</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Rodrigo Dávila - Manager Associate de IA Generativa en Accenture. Especializado en LLMs, Agentic AI y migración de código legacy.">
+    <meta name="theme-color" content="#0a0f13">
+    <title>Rodrigo Dávila | AI Manager</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕹️</text></svg>">
 </head>
 <body class="dark-mode">
-    <div class="logo">RD</div>
-    <div class="theme-toggle">
-        <button id="theme-btn" onclick="toggleTheme()">☀️</button>
-    </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">RD</div>
+        <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar tema">☀️</button>
+    </header>
+
+    <!-- Main Container -->
     <div class="container">
         <div class="content-area">
+            <!-- Welcome Card -->
             <div class="welcome">
-                <h1>¡Hola! Soy Rodrigo Dávila</h1>
-                <p><strong>Manager Associate de IA Generativa en Accenture</strong> | 8 años de experiencia en tecnología y consultoría</p>
-                <p>Especializado en LLMs, Agentic AI y migración de código legacy. Actualmente liderando investigación de migración COBOL a Java con IA para BBVA.</p>
-                <p>Pregúntame sobre mi experiencia profesional, proyectos, habilidades técnicas o lo que quieras saber sobre mí.</p>
-                <p>📧 <a href="mailto:rdavila92@gmail.com">rdavila92@gmail.com</a> · 💼 <a href="https://www.linkedin.com/in/rodrigo-d%C3%A1vila-5b675383/" target="_blank">LinkedIn</a> · 💻 <a href="https://github.com/DavilaRodri" target="_blank">GitHub</a></p>
+                <p class="greeting">Bienvenido a mi portfolio</p>
+                <h1>Rodrigo Dávila</h1>
+                <div class="title">
+                    <span>🤖 Manager Associate de IA Generativa</span>
+                    <span class="company">@ Accenture</span>
+                </div>
+                <p class="description">
+                    +8 años transformando empresas con tecnología. Especializado en <strong>LLMs</strong>, 
+                    <strong>Agentic AI</strong> y migración de código legacy. Actualmente liderando 
+                    la investigación de migración <strong>COBOL → Java</strong> con IA para BBVA.
+                </p>
+                <p class="cta">
+                    💬 Pregúntame sobre mi experiencia, proyectos, habilidades o lo que quieras saber
+                </p>
+                <div class="social-links">
+                    <a href="mailto:rdavila92@gmail.com">
+                        <span class="icon">📧</span>
+                        <span>Email</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/rodrigo-d%C3%A1vila-5b675383/" target="_blank" rel="noopener">
+                        <span class="icon">💼</span>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/DavilaRodri" target="_blank" rel="noopener">
+                        <span class="icon">💻</span>
+                        <span>GitHub</span>
+                    </a>
+                </div>
             </div>
+
+            <!-- Conversation -->
             <div id="conversation" class="conversation"></div>
         </div>
+
+        <!-- Chat Input -->
         <div class="chat-area">
-            <div class="input-group">
-                <textarea id="pregunta" placeholder="Escribe tu pregunta aquí..." onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); enviarPregunta(); }"></textarea>
+            <div class="input-wrapper">
+                <div class="input-group">
+                    <textarea 
+                        id="pregunta" 
+                        placeholder="Escribe tu pregunta aquí..." 
+                        rows="1"
+                        onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); enviarPregunta(); }"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                </div>
+                <button class="send-icon" onclick="enviarPregunta()" aria-label="Enviar mensaje">↑</button>
             </div>
-            <span class="send-icon" onclick="enviarPregunta()" title="Enviar">↑</span>
         </div>
     </div>
+
+    <!-- Scripts -->
     <script src="js/ia_responder.js"></script>
     <script src="js/script.js"></script>
-    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91cd43086c6eb033',t:'MTc0MTM4MzczNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script>
+        // Auto-resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+    </script>
 </body>
 </html>

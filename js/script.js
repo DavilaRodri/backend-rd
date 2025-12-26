@@ -1,3 +1,7 @@
+// ============================================
+// RODRIGO DÁVILA - Script Principal
+// ============================================
+
 // Función para alternar entre modo claro y oscuro
 function toggleTheme() {
     const body = document.body;
@@ -8,13 +12,57 @@ function toggleTheme() {
         body.classList.remove('dark-mode');
         body.classList.add('light-mode');
         themeBtn.textContent = '🌙';
-        themeBtn.title = 'Modo Oscuro';
+        themeBtn.setAttribute('aria-label', 'Cambiar a modo oscuro');
+        // Actualizar meta theme-color para móviles
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#f8fafc');
     } else {
         body.classList.remove('light-mode');
         body.classList.add('dark-mode');
         themeBtn.textContent = '☀️';
-        themeBtn.title = 'Modo Claro';
+        themeBtn.setAttribute('aria-label', 'Cambiar a modo claro');
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0a0f13');
     }
+    
+    // Guardar preferencia
+    localStorage.setItem('theme', isDarkMode ? 'light' : 'dark');
+}
+
+// Cargar tema guardado
+function loadSavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const themeBtn = document.getElementById('theme-btn');
+    
+    if (savedTheme === 'light') {
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        themeBtn.textContent = '🌙';
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#f8fafc');
+    }
+}
+
+// Mostrar indicador de escritura
+function showTypingIndicator() {
+    const conversation = document.getElementById('conversation');
+    const typing = document.createElement('div');
+    typing.className = 'typing-indicator';
+    typing.id = 'typing-indicator';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    conversation.appendChild(typing);
+    scrollToBottom();
+}
+
+// Ocultar indicador de escritura
+function hideTypingIndicator() {
+    const typing = document.getElementById('typing-indicator');
+    if (typing) typing.remove();
+}
+
+// Scroll al final
+function scrollToBottom() {
+    const contentArea = document.querySelector('.content-area');
+    setTimeout(() => {
+        contentArea.scrollTop = contentArea.scrollHeight;
+    }, 100);
 }
 
 // Función para enviar la pregunta
@@ -22,30 +70,70 @@ async function enviarPregunta() {
     const preguntaInput = document.getElementById('pregunta');
     const pregunta = preguntaInput.value.trim();
     const conversation = document.getElementById('conversation');
-    const contentArea = document.querySelector('.content-area');
     const welcome = document.querySelector('.welcome');
     const container = document.querySelector('.container');
 
-    if (pregunta) {
-        welcome.style.display = 'none'; // Oculta la presentación
-        container.classList.add('active'); // Activa el layout final
+    if (!pregunta) return;
 
-        const userMessage = document.createElement('div');
-        userMessage.className = 'message user-message';
-        userMessage.textContent = pregunta;
-        conversation.appendChild(userMessage);
+    // Ocultar welcome y activar conversación
+    welcome.style.display = 'none';
+    container.classList.add('active');
+    conversation.classList.add('active');
 
+    // Mostrar mensaje del usuario
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message user-message';
+    userMessage.textContent = pregunta;
+    conversation.appendChild(userMessage);
+
+    // Limpiar input y resetear altura
+    preguntaInput.value = '';
+    preguntaInput.style.height = 'auto';
+
+    scrollToBottom();
+
+    // Mostrar indicador de escritura
+    showTypingIndicator();
+
+    try {
+        // Obtener respuesta de la IA
         const respuesta = await responderPregunta(pregunta);
+        
+        hideTypingIndicator();
 
+        // Mostrar respuesta
         const assistantMessage = document.createElement('div');
         assistantMessage.className = 'message assistant-message';
-        assistantMessage.innerHTML = respuesta.replace(/\n/g, '<br>');
+        assistantMessage.innerHTML = formatResponse(respuesta);
         conversation.appendChild(assistantMessage);
 
-        preguntaInput.value = '';
-        conversation.classList.add('active');
-
-        // Desplazar al final del content-area
-        contentArea.scrollTop = contentArea.scrollHeight;
+    } catch (error) {
+        hideTypingIndicator();
+        
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'message assistant-message';
+        errorMessage.textContent = 'Lo siento, ha ocurrido un error. Por favor, inténtalo de nuevo.';
+        conversation.appendChild(errorMessage);
     }
+
+    scrollToBottom();
 }
+
+// Formatear respuesta (convertir saltos de línea, etc.)
+function formatResponse(text) {
+    return text
+        .replace(/\n/g, '<br>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>');
+}
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    loadSavedTheme();
+    
+    // Focus en el input
+    const input = document.getElementById('pregunta');
+    if (input && window.innerWidth > 768) {
+        input.focus();
+    }
+});
