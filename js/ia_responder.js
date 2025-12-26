@@ -2,7 +2,7 @@
 // CONFIGURACIÓN - Rodrigo Dávila Chatbot
 // ============================================
 
-const GEMINI_API_KEY = 'AIzaSyAMKz2QwDMK5mvEIOpOYVGtBzV81TullBk';
+const GEMINI_API_KEY = 'AIzaSyBY_I-eoMpR5BOWM0b3OIJV7-bJl85uPn4';
 const GEMINI_MODEL = 'gemini-2.0-flash';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
