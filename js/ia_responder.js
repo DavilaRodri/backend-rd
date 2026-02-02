@@ -2,9 +2,8 @@
 // CONFIGURACIÓN - Rodrigo Dávila Chatbot
 // ============================================
 
-const GEMINI_API_KEY = 'AIzaSyBY_I-eoMpR5BOWM0b3OIJV7-bJl85uPn4';
-const GEMINI_MODEL = 'gemini-2.0-flash';
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+// La API key está segura en Cloudflare Workers (no expuesta en GitHub)
+const GEMINI_PROXY_URL = 'https://steep-shadow-ce98.tronquitomagdaleno13.workers.dev';
 
 // ============================================
 // TUS DATOS - Edita esto para actualizar tu info
@@ -270,8 +269,7 @@ let conversationHistory = [];
 // ============================================
 
 async function responderPregunta(pregunta) {
-    console.log("Enviando pregunta a Gemini:", pregunta);
-    console.log("URL:", `${GEMINI_API_URL}?key=${GEMINI_API_KEY.substring(0,10)}...`);
+    console.log("Enviando pregunta...");
     
     try {
         // Añadir pregunta al historial
@@ -294,9 +292,7 @@ async function responderPregunta(pregunta) {
             }
         };
         
-        console.log("Enviando request...");
-        
-        const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(GEMINI_PROXY_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
